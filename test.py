@@ -28,4 +28,27 @@ def insert_cn(node,cn)
     if node.network == cn:
         node.is_cn = True
         return
-    if not node.network
+    if not node.network.overlaps(cn):
+        return
+    if not node.left is None:
+        node.split()
+
+    insert_cn(node.left,cn)
+    insert_cn(node.right,cn)
+
+def dump_non_cn(node, result):
+
+    # 中国IP不输出
+    if node.is_cn:
+        return
+
+    # 到达叶子节点
+    if node.left is None:
+
+        result.append(node.network)
+        return
+
+    dump_non_cn(node.left, result)
+    dump_non_cn(node.right, result)
+
+
