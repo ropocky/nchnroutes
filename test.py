@@ -1,16 +1,4 @@
 import ipaddress
-cnip = []
-with open(r'china_ip_list.txt','r') as r:
-    for line in r:
-        line = line.strip()
-        if not line:
-            continue
-        ip = ipaddress.ip_network(line)
-        cnip.append(ip)
-result = list(ipaddress.collapse_addresses(cnip))
-
-print("原始数量:", len(cnip))
-print("合并后数量:", len(result))
 
 class Node :
     def __init__(self,ip):
@@ -24,7 +12,7 @@ class Node :
         )
         self.left = Node(subnet[0])
         self.right = Node(subnet[1])
-def insert_cn(node,cn)
+def insert_cn(node,cn):
     if node.network == cn:
         node.is_cn = True
         return
@@ -44,4 +32,24 @@ def dump_non_cn(node, result):
     dump_non_cn(node.left, result)
     dump_non_cn(node.right, result)
 
+def load_file(filename):
+    cnip = []
+    with open(filename,'r') as r:
+        for line in r:
+            line = line.strip()
+            if not line:
+                continue
+            ip = ipaddress.ip_network(line)
+            cnip.append(ip)
+    return cnip
+
+def main():
+    cn_list = load_file(r'china_ip_list.txt')
+    root = Node(r'0.0.0.0/0')
+    for cn in cn_list:
+        insert_cn(root,cn)
+
+    result = list()
+
+    dump_non_cn(root,result)
 
