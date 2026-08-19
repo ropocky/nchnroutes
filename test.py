@@ -1,4 +1,5 @@
 import ipaddress
+import os
 
 private_ip = [
     ipaddress.IPv4Network('0.0.0.0/8'),
@@ -54,6 +55,8 @@ def dump_non_cn(node, result):
     dump_non_cn(node.right, result)
 
 def load_file(filename):
+    if os.path.exists('non-cn.txt'):
+        os.replace('non-cn.txt', 'non-cn-old.txt')
     cn_list = []
     with open(filename, 'r') as r:
         for line in r:
@@ -64,6 +67,20 @@ def load_file(filename):
             cn_list.append(ip)
     cn_list.extend(private_ip)
     return cn_list
+
+def compare(old,new):
+    def load_ips(filename):
+        result = set()
+        with open(filename, 'r') as f:
+            for line in f:
+                clean_line = line.strip()
+                if clean_line:  # 非空行才添加
+                    result.add(clean_line)
+        return result
+    added = load_ips(new) - load_ips(old)
+    removed = load_ips(old) - load_ips(new)
+    return added, removed
+
 
 def main():
     cn_list = load_file('china_ip_list.txt')
@@ -78,6 +95,7 @@ def main():
         for network in result:
             f.write(str(network) + '\n')
     print('完成')
+    added,remove = compare('non-cn-old.txt','non-cn.txt')
 
 if __name__ == '__main__':
     main()
