@@ -77,6 +77,7 @@ def compare(old,new):
                 if clean_line:  # 非空行才添加
                     result.add(clean_line)
         return result
+#    print(len(load_ips(new)))
     added = load_ips(new) - load_ips(old)
     removed = load_ips(old) - load_ips(new)
     return added, removed
@@ -90,12 +91,21 @@ def main():
 
     result = []
     dump_non_cn(root, result)
-    print(len(result))
+#    print(len(result))
     with open(r'non-cn.txt', 'w') as f:
         for network in result:
             f.write(str(network) + '\n')
-    print('完成')
     added,remove = compare('non-cn-old.txt','non-cn.txt')
-
+#    print(r'增加了：',len(added))
+#    print(r'减少了：',len(remove))
+    cmd = ['configure terminal','router bgp 65000']
+    for ip in added:
+        cmd.append('network '+str(ip))
+    for ip in remove:
+        cmd.append(r'no network '+str(ip))
+    cmd.extend(['exit','end','write'])
+    with open(r'update.txt', 'w') as f:
+        for ip in cmd:
+            f.write(str(ip)+'\n')
 if __name__ == '__main__':
     main()
