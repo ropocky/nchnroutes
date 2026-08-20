@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import ipaddress
 import os
 
@@ -96,8 +97,8 @@ def main():
         for network in result:
             f.write(str(network) + '\n')
     added,remove = compare('non-cn-old.txt','non-cn.txt')
-#    print(r'增加了：',len(added))
-#    print(r'减少了：',len(remove))
+    print(r'增加了：',len(added))
+    print(r'减少了：',len(remove))
     cmd = ['configure terminal','router bgp 65000']
     for ip in added:
         cmd.append('network '+str(ip))
