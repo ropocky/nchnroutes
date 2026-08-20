@@ -100,10 +100,10 @@ def main():
     print(r'增加了：',len(added))
     print(r'减少了：',len(remove))
     cmd = ['configure terminal','router bgp 65000']
-    for ip in added:
-        cmd.append('network '+str(ip))
     for ip in remove:
         cmd.append(r'no network '+str(ip))
+    for ip in added:
+        cmd.append('network '+str(ip))
     cmd.extend(['exit','end','write'])
     with open(r'update.txt', 'w') as f:
         for ip in cmd:
