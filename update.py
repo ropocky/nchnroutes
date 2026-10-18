@@ -5,22 +5,21 @@ import os
 private_ip = [
     ipaddress.IPv4Network('0.0.0.0/8'),
     ipaddress.IPv4Network('10.0.0.0/8'),
+    ipaddress.IPv4Network('100.64.0.0/10'),
     ipaddress.IPv4Network('127.0.0.0/8'),
     ipaddress.IPv4Network('169.254.0.0/16'),
-    ipaddress.IPv4Network('172.16.0.0/13'),
-    ipaddress.IPv4Network('192.0.0.0/29'),
-    ipaddress.IPv4Network('192.0.0.170/31'),
+    ipaddress.IPv4Network('172.16.0.0/12'),
+    ipaddress.IPv4Network('192.0.0.0/24'),
     ipaddress.IPv4Network('192.0.2.0/24'),
+    ipaddress.IPv4Network('192.88.99.0/24'),
     ipaddress.IPv4Network('192.168.0.0/16'),
     ipaddress.IPv4Network('198.18.0.0/15'),
     ipaddress.IPv4Network('198.51.100.0/24'),
     ipaddress.IPv4Network('203.0.113.0/24'),
+    ipaddress.IPv4Network('224.0.0.0/4'),
+    ipaddress.IPv4Network('233.252.0.0/24'),
     ipaddress.IPv4Network('240.0.0.0/4'),
     ipaddress.IPv4Network('255.255.255.255/32'),
-    ipaddress.IPv4Network('169.254.0.0/16'),
-    ipaddress.IPv4Network('127.0.0.0/8'),
-    ipaddress.IPv4Network('224.0.0.0/4'),
-    ipaddress.IPv4Network('100.64.0.0/10'),
 ]
 
 class Node:
